@@ -34,33 +34,38 @@ namespace WSVistaWebClientTest.WebUI.Infrastructure
         {
             #region mock
 
+            Ticket CreateTicket()
+            {
+                return new Ticket
+                {
+                    AreaNumber = _randomizer.Value.Next(1, 10),
+                    ColumnIndex = _randomizer.Value.Next(1, 50),
+                    RowIndex = _randomizer.Value.Next(1, 50)
+                };
+            }
+
             var mock = new Mock<IOrderRepository>();
             mock.Setup(m => m.Orders).Returns(new List<Order>
             {
-                new Order {OrderId = 1L, OrderDate = DateTime.Today, Tickets = new List<Ticket>()},
-                new Order {OrderId = 2L, OrderDate = DateTime.Today.AddDays(-1), Tickets = new List<Ticket>
+                new Order {OrderId = 1L, OrderNumber = Guid.NewGuid().ToString(), OrderDate = DateTime.Today, Tickets = new List<Ticket>
                 {
-                    new Ticket
-                    {
-                        AreaNumber = _randomizer.Value.Next(),
-                        ColumnIndex = _randomizer.Value.Next(),
-                        RowIndex = _randomizer.Value.Next()
-                    },
-                    new Ticket
-                    {
-                        AreaNumber = _randomizer.Value.Next(),
-                        ColumnIndex = _randomizer.Value.Next(),
-                        RowIndex = _randomizer.Value.Next()
-                    }
+                    CreateTicket()
                 }},
-                new Order {OrderId = 3L, OrderDate = DateTime.Today.AddDays(1), Tickets = new List<Ticket>
+                new Order {OrderId = 2L, OrderNumber = Guid.NewGuid().ToString(), OrderDate = DateTime.Today.AddDays(-1), Tickets = new List<Ticket>
                 {
-                    new Ticket
-                    {
-                        AreaNumber = _randomizer.Value.Next(),
-                        ColumnIndex = _randomizer.Value.Next(),
-                        RowIndex = _randomizer.Value.Next()
-                    }
+                    CreateTicket(), CreateTicket(), CreateTicket(), CreateTicket(), CreateTicket(), CreateTicket(), CreateTicket()
+                }},
+                new Order {OrderId = 3L, OrderNumber = Guid.NewGuid().ToString(), OrderDate = DateTime.Today.AddDays(1), Tickets = new List<Ticket>
+                {
+                    CreateTicket(), CreateTicket()
+                }},
+                new Order {OrderId = 4L, OrderNumber = Guid.NewGuid().ToString(), OrderDate = DateTime.Today.AddDays(1), Tickets = new List<Ticket>
+                {
+                    CreateTicket(), CreateTicket()
+                }},
+                new Order {OrderId = 5L, OrderNumber = Guid.NewGuid().ToString(), OrderDate = DateTime.Today.AddDays(1), Tickets = new List<Ticket>
+                {
+                    CreateTicket(), CreateTicket()
                 }}
             });
 

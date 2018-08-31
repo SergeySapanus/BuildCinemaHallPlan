@@ -1,26 +1,14 @@
-﻿@using WSVistaWebClientTest.Domain.Entities;
-@model IEnumerable<Order>
+﻿@using WSVistaWebClientTest.WebUI.HtmlHelpers
+@model WSVistaWebClientTest.WebUI.Models.OrderListViewModel
 
 @{
     ViewBag.Title = "Orders";
 }
-
-@foreach (var o in Model)
+@foreach (var o in Model.Orders)
 {
-    <div>
-        <h2>@o.OrderId</h2>
-        @o.OrderDate.ToLongDateString()
-        @foreach (var t in o.Tickets)
-        {
-            <div>
-                <h4>@t.TicketId</h4>
-                <div>
-                    @t.AreaNumber
-                    @t.RowIndex
-                    @t.ColumnIndex
-                </div>
-            </div>
-        }
-    </div>
+    @Html.Partial("OrderSummary", o)
 }
+<div class="btn-group pull-right">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x }))
+</div>
 

@@ -14,6 +14,12 @@ namespace WSVistaWebClientTest.WebUI
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: null,
+                url: "Page{page}",
+                defaults: new { controller = "Order", action = "List", page = @"\d+" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Order", action = "List", id = UrlParameter.Optional }
