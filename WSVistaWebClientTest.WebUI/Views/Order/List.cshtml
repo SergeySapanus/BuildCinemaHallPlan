@@ -1,0 +1,26 @@
+﻿@using WSVistaWebClientTest.Domain.Entities;
+@model IEnumerable<Order>
+
+@{
+    ViewBag.Title = "Orders";
+}
+
+@foreach (var o in Model)
+{
+    <div>
+        <h2>@o.OrderId</h2>
+        @o.OrderDate.ToLongDateString()
+        @foreach (var t in o.Tickets)
+        {
+            <div>
+                <h4>@t.TicketId</h4>
+                <div>
+                    @t.AreaNumber
+                    @t.RowIndex
+                    @t.ColumnIndex
+                </div>
+            </div>
+        }
+    </div>
+}
+
