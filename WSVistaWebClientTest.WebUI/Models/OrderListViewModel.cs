@@ -6,6 +6,6 @@ namespace WSVistaWebClientTest.WebUI.Models
     public class OrderListViewModel
     {
         public IEnumerable<Order> Orders { get; set; }
-        public PagingInfo PagingInfo { get; set; }
+        public OrderListPagingInfo PagingInfo { get; set; }
     }
 }

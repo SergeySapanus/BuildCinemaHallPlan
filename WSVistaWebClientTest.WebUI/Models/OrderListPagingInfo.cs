@@ -2,7 +2,7 @@
 
 namespace WSVistaWebClientTest.WebUI.Models
 {
-    public class PagingInfo
+    public class OrderListPagingInfo
     {
         public int TotalItems { get; set; }
         public int ItemsPerPage { get; set; }

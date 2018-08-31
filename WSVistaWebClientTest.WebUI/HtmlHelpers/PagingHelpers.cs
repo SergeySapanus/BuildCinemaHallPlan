@@ -7,7 +7,7 @@ namespace WSVistaWebClientTest.WebUI.HtmlHelpers
 {
     public static class PagingHelpers
     {
-        public static MvcHtmlString PageLinks(this HtmlHelper html, PagingInfo pagingInfo, Func<int, string> pageUrl)
+        public static MvcHtmlString PageLinks(this HtmlHelper html, OrderListPagingInfo pagingInfo, Func<int, string> pageUrl)
         {
             var result = new StringBuilder();
 

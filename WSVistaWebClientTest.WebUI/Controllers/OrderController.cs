@@ -23,7 +23,7 @@ namespace WSVistaWebClientTest.WebUI.Controllers
                     .OrderBy(o => o.OrderId)
                     .Skip((page - 1) * PageSize)
                     .Take(PageSize),
-                PagingInfo = new PagingInfo
+                PagingInfo = new OrderListPagingInfo
                 {
                     CurrentPage = page,
                     ItemsPerPage = PageSize,

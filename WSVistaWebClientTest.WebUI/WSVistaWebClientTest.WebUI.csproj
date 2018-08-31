@@ -144,7 +144,7 @@
     <Compile Include="HtmlHelpers\PagingHelpers.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Models\OrderListViewModel.cs" />
-    <Compile Include="Models\PagingInfo.cs" />
+    <Compile Include="Models\OrderListPagingInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
