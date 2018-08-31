@@ -1,0 +1,15 @@
+﻿@using WSVistaWebClientTest.WebUI.Infrastructure.Concrete;
+@model IEnumerable<MenuItemType>
+
+@foreach (var link in Model)
+{
+    @Html.RouteLink(link.ToString(),new
+{
+    controller = "Default",
+    action = "Index",
+    item = link
+},new
+{
+    @class = "btn btn-block btn-default btn-lg"
+})
+}

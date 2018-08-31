@@ -5,6 +5,8 @@ using Moq;
 using Ninject;
 using WSVistaWebClientTest.Domain.Abstract;
 using WSVistaWebClientTest.Domain.Entities;
+using WSVistaWebClientTest.WebUI.Infrastructure.Abstract;
+using WSVistaWebClientTest.WebUI.Infrastructure.Concrete;
 
 namespace WSVistaWebClientTest.WebUI.Infrastructure
 {
@@ -32,8 +34,24 @@ namespace WSVistaWebClientTest.WebUI.Infrastructure
 
         private void AddBindings()
         {
-            #region mock
+            BindOrderRepositoryMock();
+            BindMenuInfoMock();
+        }
 
+        private void BindMenuInfoMock()
+        {
+            var mock = new Mock<IMenuInfo>();
+            mock.Setup(m => m.Items).Returns(new List<MenuItemType>
+            {
+                MenuItemType.Plan,
+                MenuItemType.Orders
+            });
+
+            _kernel.Bind<IMenuInfo>().ToConstant(mock.Object);
+        }
+
+        private void BindOrderRepositoryMock()
+        {
             Ticket CreateTicket()
             {
                 return new Ticket
@@ -47,33 +65,68 @@ namespace WSVistaWebClientTest.WebUI.Infrastructure
             var mock = new Mock<IOrderRepository>();
             mock.Setup(m => m.Orders).Returns(new List<Order>
             {
-                new Order {OrderId = 1L, OrderNumber = Guid.NewGuid().ToString(), OrderDate = DateTime.Today, Tickets = new List<Ticket>
+                new Order
                 {
-                    CreateTicket()
-                }},
-                new Order {OrderId = 2L, OrderNumber = Guid.NewGuid().ToString(), OrderDate = DateTime.Today.AddDays(-1), Tickets = new List<Ticket>
+                    OrderId = 1L,
+                    OrderNumber = Guid.NewGuid().ToString(),
+                    OrderDate = DateTime.Today,
+                    Tickets = new List<Ticket>
+                    {
+                        CreateTicket()
+                    }
+                },
+                new Order
                 {
-                    CreateTicket(), CreateTicket(), CreateTicket(), CreateTicket(), CreateTicket(), CreateTicket(), CreateTicket()
-                }},
-                new Order {OrderId = 3L, OrderNumber = Guid.NewGuid().ToString(), OrderDate = DateTime.Today.AddDays(1), Tickets = new List<Ticket>
+                    OrderId = 2L,
+                    OrderNumber = Guid.NewGuid().ToString(),
+                    OrderDate = DateTime.Today.AddDays(-1),
+                    Tickets = new List<Ticket>
+                    {
+                        CreateTicket(),
+                        CreateTicket(),
+                        CreateTicket(),
+                        CreateTicket(),
+                        CreateTicket(),
+                        CreateTicket(),
+                        CreateTicket()
+                    }
+                },
+                new Order
                 {
-                    CreateTicket(), CreateTicket()
-                }},
-                new Order {OrderId = 4L, OrderNumber = Guid.NewGuid().ToString(), OrderDate = DateTime.Today.AddDays(1), Tickets = new List<Ticket>
+                    OrderId = 3L,
+                    OrderNumber = Guid.NewGuid().ToString(),
+                    OrderDate = DateTime.Today.AddDays(1),
+                    Tickets = new List<Ticket>
+                    {
+                        CreateTicket(),
+                        CreateTicket()
+                    }
+                },
+                new Order
                 {
-                    CreateTicket(), CreateTicket()
-                }},
-                new Order {OrderId = 5L, OrderNumber = Guid.NewGuid().ToString(), OrderDate = DateTime.Today.AddDays(1), Tickets = new List<Ticket>
+                    OrderId = 4L,
+                    OrderNumber = Guid.NewGuid().ToString(),
+                    OrderDate = DateTime.Today.AddDays(1),
+                    Tickets = new List<Ticket>
+                    {
+                        CreateTicket(),
+                        CreateTicket()
+                    }
+                },
+                new Order
                 {
-                    CreateTicket(), CreateTicket()
-                }}
+                    OrderId = 5L,
+                    OrderNumber = Guid.NewGuid().ToString(),
+                    OrderDate = DateTime.Today.AddDays(1),
+                    Tickets = new List<Ticket>
+                    {
+                        CreateTicket(),
+                        CreateTicket()
+                    }
+                }
             });
 
             _kernel.Bind<IOrderRepository>().ToConstant(mock.Object);
-
-            #endregion mock
-
-
         }
     }
 }
