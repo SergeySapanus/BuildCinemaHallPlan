@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Web.Mvc;
 using Moq;
 using Ninject;
 using WSVistaWebClientTest.Domain.Abstract;
+using WSVistaWebClientTest.Domain.Concrete;
 using WSVistaWebClientTest.Domain.Entities;
 using WSVistaWebClientTest.WebUI.Infrastructure.Abstract;
 using WSVistaWebClientTest.WebUI.Infrastructure.Concrete;
@@ -36,6 +38,8 @@ namespace WSVistaWebClientTest.WebUI.Infrastructure
         {
             BindOrderRepositoryMock();
             BindMenuInfoMock();
+
+            _kernel.Bind<IPlanProcessor>().To<PlanProcessor>().WithConstructorArgument("settings", ConfigurationManager.AppSettings["Plan.Api"]);
         }
 
         private void BindMenuInfoMock()

@@ -1,5 +1,9 @@
-﻿@using WSVistaWebClientTest.WebUI.Infrastructure.Concrete;
+﻿@using WSVistaWebClientTest.WebUI.Infrastructure.Concrete
 @model IEnumerable<MenuItemType>
+
+@{
+    var buttons = "btn btn-block btn-default btn-lg";
+}
 
 @foreach (var link in Model)
 {
@@ -7,9 +11,9 @@
 {
     controller = "Default",
     action = "Index",
-    item = link
+    menuItem = link
 },new
 {
-    @class = "btn btn-block btn-default btn-lg"
+    @class = buttons + (link == ViewBag.SelectedLink ? " btn-primary" : string.Empty)
 })
 }

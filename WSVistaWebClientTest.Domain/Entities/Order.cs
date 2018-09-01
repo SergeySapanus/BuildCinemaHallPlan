@@ -11,6 +11,6 @@ namespace WSVistaWebClientTest.Domain.Entities
 
         public string OrderNumber { get; set; }
 
-        public IEnumerable<Ticket> Tickets { get; set; }
+        public ICollection<Ticket> Tickets { get; set; }
     }
 }

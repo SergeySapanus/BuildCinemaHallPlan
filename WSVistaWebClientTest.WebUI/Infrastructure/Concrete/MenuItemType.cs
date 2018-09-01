@@ -2,6 +2,7 @@
 {
     public enum MenuItemType
     {
+        None,
         Plan,
         Orders
     }
