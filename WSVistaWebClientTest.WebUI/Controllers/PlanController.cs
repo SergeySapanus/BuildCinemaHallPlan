@@ -35,7 +35,7 @@ namespace WSVistaWebClientTest.WebUI.Controllers
         {
             var ticket = new Ticket
             {
-                Order = currentOrder,
+             
                 Seat = currentSimplePlan.GetSeatsLayout()
                     .OfType<Seat>()
                     .FirstOrDefault(s => s.CompositeId == seatCompositeId)

@@ -1,9 +1,13 @@
-﻿namespace WSVistaWebClientTest.Domain.Entities
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace WSVistaWebClientTest.Domain.Entities
 {
     public class Ticket
     {
         private Seat _seat;
 
+        [Key]
         public long TicketId { get; set; }
 
         public int AreaNumber { get; set; }
@@ -12,8 +16,10 @@
 
         public int RowIndex { get; set; }
 
+        public long OrderId { get; set; }
         public Order Order { get; set; }
 
+        [NotMapped]
         public Seat Seat
         {
             get => _seat;

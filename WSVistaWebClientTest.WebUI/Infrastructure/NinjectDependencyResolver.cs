@@ -36,8 +36,11 @@ namespace WSVistaWebClientTest.WebUI.Infrastructure
 
         private void AddBindings()
         {
-            BindOrderRepositoryMock();
+            //BindOrderRepositoryMock();
+
             BindMenuInfoMock();
+
+            _kernel.Bind<IOrderRepository>().To<EFOrderRepository>();
         }
 
         private void BindMenuInfoMock()
