@@ -1,0 +1,58 @@
+﻿@using WSVistaWebClientTest.WebUI.Models
+@model PlanIndexViewModel
+
+@{
+    ViewBag.Title = "Plan";
+}
+
+<h2>Plan</h2>
+<p>Please choose tickets, and press Checkout.</p>
+@Html.ValidationSummary()
+
+
+<div class="container">
+
+    <table id="planTable" class="tab-pane">
+        <tbody>
+            @for (var i = 0; i < 10; i++)
+            {
+                <tr>
+                    @for (var j = 0; j < 30; j++)
+                    {
+                        <td>
+                            @if (i == 4 || j == 13)
+                            {
+                                if (i == 5 || j == 12)
+                                {
+                                    using (Html.BeginForm("AddTicket", "Plan"))
+                                    {
+                                        <input class="btn btn-sm btn-primary" type="submit" value="" />
+                                    }
+                                }
+                                else
+                                {
+                                    using (Html.BeginForm("RemoveTicket", "Plan"))
+                                    {
+                                        <input class="btn btn-sm btn-success" type="submit" value="" />
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <input class="btn btn-sm btn-danger disabled" type="submit" value="" />
+                                /*<input class="btn btn-sm hidden" type="button" />*/
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+    @using (Html.BeginForm("Checkout", "Plan"))
+    {
+        //@Html.Hidden("ProductId", line.Product.ProductId)
+        <input class="btn btn-sm btn-warning" type="submit" value="Checkout" />
+    }
+</div>

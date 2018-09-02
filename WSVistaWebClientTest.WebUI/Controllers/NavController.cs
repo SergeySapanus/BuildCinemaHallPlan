@@ -13,7 +13,7 @@ namespace WSVistaWebClientTest.WebUI.Controllers
             _menuInfo = menuInfo;
         }
 
-        public PartialViewResult Menu(MenuItemType menuItem = MenuItemType.None)
+        public PartialViewResult Menu(MenuItemType menuItem = MenuItemType.Plan)
         {
             ViewBag.SelectedLink = menuItem;
 

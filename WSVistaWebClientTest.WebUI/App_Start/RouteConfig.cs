@@ -25,13 +25,19 @@ namespace WSVistaWebClientTest.WebUI
             routes.MapRoute(
                 name: null,
                 url: $"{MenuItemType.Plan}",
-                defaults: new { controller = "Plan", action = "Plan", menuItem = MenuItemType.Plan }
+                defaults: new { controller = "Plan", action = "Index", menuItem = MenuItemType.Plan }
             );
 
             routes.MapRoute(
                 name: null,
                 url: $"{MenuItemType.Orders}/Page{{page}}",
                 defaults: new { controller = "Order", action = "List", page = "\\d+", menuItem = MenuItemType.Orders }
+            );
+
+            routes.MapRoute(
+                name: null,
+                url: $"{MenuItemType.Plan}/Checkout",
+                defaults: new { controller = "Plan", action = "Checkout", menuItem = MenuItemType.Plan }
             );
 
             routes.MapRoute(

@@ -11,7 +11,7 @@ namespace WSVistaWebClientTest.WebUI.Controllers
             switch (menuItem)
             {
                 case MenuItemType.Plan:
-                    return RedirectToAction("Plan", "Plan");
+                    return RedirectToAction("Index", "Plan");
                 case MenuItemType.Orders:
                     return RedirectToAction("List", "Order");
                 default:

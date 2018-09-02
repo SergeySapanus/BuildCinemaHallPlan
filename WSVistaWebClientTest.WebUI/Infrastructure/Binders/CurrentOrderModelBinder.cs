@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using WSVistaWebClientTest.Domain.Entities;
 
 namespace WSVistaWebClientTest.WebUI.Infrastructure.Binders
@@ -15,6 +16,8 @@ namespace WSVistaWebClientTest.WebUI.Infrastructure.Binders
             if (currentOrder == null)
             {
                 currentOrder = new Order();
+                currentOrder.Tickets = new List<Ticket>();
+
                 if (controllerContext.HttpContext.Session != null)
                     controllerContext.HttpContext.Session[nameof(currentOrder)] = currentOrder;
             }

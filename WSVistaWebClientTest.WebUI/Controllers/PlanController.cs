@@ -3,44 +3,47 @@ using System.Linq;
 using System.Web.Mvc;
 using WSVistaWebClientTest.Domain.Abstract;
 using WSVistaWebClientTest.Domain.Entities;
+using WSVistaWebClientTest.WebUI.Models;
 
 namespace WSVistaWebClientTest.WebUI.Controllers
 {
     public class PlanController : Controller
     {
-        private readonly IPlanProcessor _planProcessor;
         private readonly IOrderRepository _orderRepository;
 
-        public PlanController(IPlanProcessor planProcessor, IOrderRepository orderRepository)
+        public PlanController(IOrderRepository orderRepository)
         {
-            _planProcessor = planProcessor;
             _orderRepository = orderRepository;
         }
 
         [HttpGet]
-        public ActionResult Plan()
+        public ViewResult Index(Plan currentPlan, Order currentOrder)
         {
-            _planProcessor.GetPlan();
+            var model = new PlanIndexViewModel
+            {
+                Plan = currentPlan,
+                Order = currentOrder
+            };
 
-            return View();
+            return View(model);
         }
 
-        public RedirectToRouteResult AddTicket(Order currentOrder, Ticket ticket, string returnUrl)
+        public ViewResult AddTicket(Plan currentPlan, Order currentOrder, Ticket ticket)
         {
             currentOrder.Tickets.Add(ticket);
 
-            return RedirectToAction("Index", new { returnUrl });
+            return View("Index");
         }
 
-        public RedirectToRouteResult RemoveTicket(Order currentOrder, Ticket ticket, string returnUrl)
+        public ViewResult RemoveTicket(Plan currentPlan, Order currentOrder, Ticket ticket)
         {
             currentOrder.Tickets.Remove(ticket);
 
-            return RedirectToAction("Index", new { returnUrl });
+            return View("Index");
         }
 
         [HttpPost]
-        public ViewResult Checkout(Order currentOrder, string returnUrl)
+        public ViewResult Checkout(Plan currentPlan, Order currentOrder)
         {
             if (!currentOrder.Tickets.Any())
                 ModelState.AddModelError(string.Empty, "Sorry, your order is empty!");
@@ -57,7 +60,7 @@ namespace WSVistaWebClientTest.WebUI.Controllers
                 return View("Completed");
             }
 
-            return RedirectToAction("Index", new { returnUrl });
+            return View("Index");
         }
     }
 }
