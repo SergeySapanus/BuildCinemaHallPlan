@@ -10,24 +10,26 @@ namespace WSVistaWebClientTest.WebUI.Infrastructure.Binders
     {
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
-            Plan currentPlan = null;
+            SimplePlan currentSimplePlan = null;
 
             if (controllerContext.HttpContext.Session != null)
-                currentPlan = (Plan)controllerContext.HttpContext.Session[nameof(currentPlan)];
+                currentSimplePlan = (SimplePlan)controllerContext.HttpContext.Session[nameof(currentSimplePlan)];
 
-            if (currentPlan == null)
+            if (currentSimplePlan == null)
             {
                 var appSetting = ConfigurationManager.AppSettings["Plan.Api"];
-                currentPlan = new PlanProcessor(appSetting).GetPlan();
+                var plan = new PlanProcessor(appSetting).GetPlan();
 
-                if (currentPlan.ResponseCode != 0)
-                    throw new Exception($"The plan is not valid! ({nameof(currentPlan.ResponseCode)}: {currentPlan.ResponseCode})");
+                if (plan.ResponseCode != 0)
+                    throw new Exception($"The plan is not valid! ({nameof(plan.ResponseCode)}: {plan.ResponseCode})");
+
+                currentSimplePlan = new SimplePlan(plan);
 
                 if (controllerContext.HttpContext.Session != null)
-                    controllerContext.HttpContext.Session[nameof(currentPlan)] = currentPlan;
+                    controllerContext.HttpContext.Session[nameof(currentSimplePlan)] = currentSimplePlan;
             }
 
-            return currentPlan;
+            return currentSimplePlan;
         }
     }
 }

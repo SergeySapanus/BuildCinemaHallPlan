@@ -38,9 +38,6 @@ namespace WSVistaWebClientTest.WebUI.Infrastructure
         {
             BindOrderRepositoryMock();
             BindMenuInfoMock();
-
-            //var appSetting = ConfigurationManager.AppSettings["Plan.Api"];
-            //_kernel.Bind<IPlanProcessor>().To<PlanProcessor>().WithConstructorArgument("api", appSetting);
         }
 
         private void BindMenuInfoMock()

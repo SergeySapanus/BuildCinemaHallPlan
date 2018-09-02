@@ -14,45 +14,59 @@
 
     <table id="planTable" class="tab-pane">
         <tbody>
-            @for (var i = 0; i < 10; i++)
+
+            @for (var x = 0; x < Model.SeatRowsCount; x++)
             {
                 <tr>
-                    @for (var j = 0; j < 30; j++)
+                    @for (var y = 0; y < Model.SeatColumnsCount; y++)
                     {
                         <td>
-                            @if (i == 4 || j == 13)
+                            @if (Model.IsEmpty(y, x))
                             {
-                                if (i == 5 || j == 12)
-                                {
-                                    using (Html.BeginForm("AddTicket", "Plan"))
-                                    {
-                                        <input class="btn btn-sm btn-primary" type="submit" value="" />
-                                    }
-                                }
-                                else
-                                {
-                                    using (Html.BeginForm("RemoveTicket", "Plan"))
-                                    {
-                                        <input class="btn btn-sm btn-success" type="submit" value="" />
-                                    }
-                                }
+                                <input class="btn btn-sm disabled" style="background-color: transparent" type="submit" value="" />
                             }
                             else
                             {
-                                <input class="btn btn-sm btn-danger disabled" type="submit" value="" />
-                                /*<input class="btn btn-sm hidden" type="button" />*/
+                                if (Model.IsGhost(y, x))
+                                {
+                                    <input class="btn btn-sm btn-default disabled" type="submit" value="" />
+                                }
+                                else
+                                {
+                                    if (Model.IsFree(y, x))
+                                    {
+                                        if (Model.IsOrdered(y, x))
+                                        {
+                                            using (Html.BeginForm("RemoveTicket", "Plan"))
+                                            {
+                                                @Html.Hidden("seatCompositeId", Model.GetSeatCompositeId(y, x))
+                                                <input class="btn btn-sm btn-success" type="submit" value="" />
+                                            }
+                                        }
+                                        else
+                                        {
+                                            using (Html.BeginForm("AddTicket", "Plan"))
+                                            {
+                                                @Html.Hidden("seatCompositeId", Model.GetSeatCompositeId(y, x))
+                                                <input class="btn btn-sm btn-primary" type="submit" value="" />
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <input class="btn btn-sm btn-danger disabled" type="submit" value="" />
+                                    }
+                                }
                             }
                         </td>
                     }
                 </tr>
             }
         </tbody>
-
     </table>
 
     @using (Html.BeginForm("Checkout", "Plan"))
     {
-        //@Html.Hidden("ProductId", line.Product.ProductId)
         <input class="btn btn-sm btn-warning" type="submit" value="Checkout" />
     }
 </div>

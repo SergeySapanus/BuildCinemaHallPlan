@@ -1,4 +1,6 @@
-﻿namespace WSVistaWebClientTest.Domain.Entities
+﻿using System;
+
+namespace WSVistaWebClientTest.Domain.Entities
 {
     public class Plan
     {
@@ -10,9 +12,9 @@
     {
         //public AreaCategory[] AreaCategories { get; set; }
         public Area[] Areas { get; set; }
-        //public float BoundaryLeft { get; set; }
-        //public int BoundaryRight { get; set; }
-        //public int BoundaryTop { get; set; }
+        public float BoundaryLeft { get; set; }
+        public float BoundaryRight { get; set; }
+        public float BoundaryTop { get; set; }
         //public float ScreenStart { get; set; }
         //public int ScreenWidth { get; set; }
     }
@@ -29,7 +31,7 @@
 
     public class Area
     {
-        public string AreaCategoryCode { get; set; }
+        //public string AreaCategoryCode { get; set; }
         //public string Description { get; set; }
         //public string DescriptionAlt { get; set; }
         //public bool HasSofaSeatingEnabled { get; set; }
@@ -55,12 +57,16 @@
 
     public class Seat
     {
+        public int CompositeId => Position != null
+            ? Convert.ToInt32($"{Position.AreaNumber}{Position.RowIndex}{Position.ColumnIndex}")
+            : -1;
+
         public string Id { get; set; }
-        public int OriginalStatus { get; set; }
+        //public int OriginalStatus { get; set; }
         public Position Position { get; set; }
-        public int Priority { get; set; }
-        public int SeatStyle { get; set; }
-        public object SeatsInGroup { get; set; }
+        //public int Priority { get; set; }
+        //public int SeatStyle { get; set; }
+        //public object SeatsInGroup { get; set; }
         public int Status { get; set; }
     }
 

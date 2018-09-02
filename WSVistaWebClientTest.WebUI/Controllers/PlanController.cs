@@ -16,34 +16,47 @@ namespace WSVistaWebClientTest.WebUI.Controllers
             _orderRepository = orderRepository;
         }
 
-        [HttpGet]
-        public ViewResult Index(Plan currentPlan, Order currentOrder)
+        private static PlanIndexViewModel CreateModel(SimplePlan currentSimplePlan, Order currentOrder)
         {
             var model = new PlanIndexViewModel
             {
-                Plan = currentPlan,
+                Plan = currentSimplePlan,
                 Order = currentOrder
             };
-
-            return View(model);
+            return model;
         }
 
-        public ViewResult AddTicket(Plan currentPlan, Order currentOrder, Ticket ticket)
+        public ViewResult Index(SimplePlan currentSimplePlan, Order currentOrder)
         {
+            return View(CreateModel(currentSimplePlan, currentOrder));
+        }
+
+        public RedirectToRouteResult AddTicket(SimplePlan currentSimplePlan, Order currentOrder, int seatCompositeId)
+        {
+            var ticket = new Ticket
+            {
+                Order = currentOrder,
+                Seat = currentSimplePlan.GetSeatsLayout()
+                    .OfType<Seat>()
+                    .FirstOrDefault(s => s.CompositeId == seatCompositeId)
+            };
+
             currentOrder.Tickets.Add(ticket);
 
-            return View("Index");
+            return RedirectToAction("Index", CreateModel(currentSimplePlan, currentOrder));
         }
 
-        public ViewResult RemoveTicket(Plan currentPlan, Order currentOrder, Ticket ticket)
+        public RedirectToRouteResult RemoveTicket(SimplePlan currentSimplePlan, Order currentOrder, int seatCompositeId)
         {
-            currentOrder.Tickets.Remove(ticket);
+            var found = currentOrder.Tickets.FirstOrDefault(t => t.Seat.CompositeId == seatCompositeId);
+            if (found != null)
+                currentOrder.Tickets.Remove(found);
 
-            return View("Index");
+            return RedirectToAction("Index", CreateModel(currentSimplePlan, currentOrder));
         }
 
         [HttpPost]
-        public ViewResult Checkout(Plan currentPlan, Order currentOrder)
+        public ViewResult Checkout(SimplePlan currentSimplePlan, Order currentOrder)
         {
             if (!currentOrder.Tickets.Any())
                 ModelState.AddModelError(string.Empty, "Sorry, your order is empty!");
@@ -60,7 +73,7 @@ namespace WSVistaWebClientTest.WebUI.Controllers
                 return View("Completed");
             }
 
-            return View("Index");
+            return View("Index", CreateModel(currentSimplePlan, currentOrder));
         }
     }
 }
